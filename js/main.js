@@ -1,13 +1,18 @@
 const bang = new Image();
-bang.src = "C:/Users/Xrisp/Desktop/Xrisp/WooSung/WooSungPersonal/웹게임테스트/updown_game/js/image_sources/bang.png";
+bang.src = "C:/Users/Xrisp/Desktop/Xrisp/WooSung/WooSungPersonal/웹게임테스트/updown_game/image_sources/bang.png";
 
 const player = new Image();
-player.src = "C:/Users/Xrisp/Desktop/Xrisp/WooSung/WooSungPersonal/웹게임테스트/updown_game/js/image_sources/player2.png"
+player.src = "C:/Users/Xrisp/Desktop/Xrisp/WooSung/WooSungPersonal/웹게임테스트/updown_game/image_sources/player2.png"
 
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width=800;
 canvas.height=400;
+
+const canvas2 = document.getElementById('canvas2');
+const ctx2 = canvas2.getContext('2d');
+canvas2.width = 400;
+canvas2.height = 50;
 
 let is_player_dead = false;
 let space_pressed = false;
@@ -17,27 +22,26 @@ let frame = 0;
 let score = 0;
 let game_speed = 2;
 
-
 const MAX_GAME_SPEED = 15;
 
 function animate()
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스 초기화
-
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
     handleObstacles();
 
     bird.update();
     bird.draw();
 
     drawScore();
+    drawBestScore();
 
     if(handleCollisions() == true) 
     { 
         is_player_dead = true;
 
-        ctx.font = "50px Verdana";
-        ctx.fillStyle = 'black';
-        ctx.fillText('RePlay: R', canvas.width/2, canvas.height/2 - 30);
+        drawReplayText();
+        saveScore(score);
 
         return;
     }
@@ -66,6 +70,21 @@ window.addEventListener('keyup', function(e){
     if(e.code === 'Space') space_pressed =false;
 })
 
+function drawBestScore()
+{
+    ctx2.font = "25px Verdana";
+    ctx2.fillStyle = 'black';
+    ctx2.textAlign = 'center';
+    ctx2.fillText('Best Score: ' + loadScore(), canvas2.width/2, canvas2.height-10);
+}
+
+function drawReplayText()
+{
+    ctx.font = "bold 100px Verdana";
+    ctx.fillStyle = 'black';
+    ctx.fillText('Again: R', canvas.width / 2, canvas.height / 2 - 30);
+}
+
 function restartGame()
 {
     // Main Settings.
@@ -85,6 +104,7 @@ function restartGame()
     // Particles Settings.
     particles_array.length = 0;
 
+
     requestAnimationFrame(animate);
 }
 
@@ -98,14 +118,13 @@ function handleCollisions(){
                 {
                     ctx.drawImage(bang, bird.x - 15, bird.y- 15, 70, 70);
                     
-                    ctx.font = "25px Verdana";
+                    ctx.font = "20px Verdana";
                     ctx.fillStyle = 'black';
                     ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 + 30);
                     
-                    ctx.font = "25px Verdana";
+                    ctx.font = "20px Verdana";
                     ctx.fillStyle = 'black';
                     ctx.fillText('Your Score: ' + score, canvas.width/2, canvas.height/2 + 60);
-                    
                     
                     return true;
                 }
