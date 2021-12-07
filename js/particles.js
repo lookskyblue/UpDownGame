@@ -19,7 +19,7 @@ class Particle
         ctx.fillStyle = this.color;
         
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.x-15, this.y+10, this.size, 0, Math.PI * 2);
         ctx.fill();
     }
 }

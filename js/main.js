@@ -1,22 +1,31 @@
+const bang = new Image();
+bang.src = "C:/Users/Xrisp/Desktop/Xrisp/WooSung/WooSungPersonal/웹게임테스트/updown_game/js/image_sources/bang.png";
+
+const player = new Image();
+player.src = "C:/Users/Xrisp/Desktop/Xrisp/WooSung/WooSungPersonal/웹게임테스트/updown_game/js/image_sources/player2.png"
+
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width=800;
 canvas.height=400;
 
+let is_player_dead = false;
 let space_pressed = false;
 let angle = 0;
 let hue = 0;
 let frame = 0;
 let score = 0;
 let game_speed = 2;
+
+
 const MAX_GAME_SPEED = 15;
 
 function animate()
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스 초기화
-    //ctx.fillRect(10, tmp, 50, 50);
 
     handleObstacles();
+
     bird.update();
     bird.draw();
 
@@ -24,9 +33,15 @@ function animate()
 
     if(handleCollisions() == true) 
     { 
+        is_player_dead = true;
+
+        ctx.font = "50px Verdana";
+        ctx.fillStyle = 'black';
+        ctx.fillText('RePlay: R', canvas.width/2, canvas.height/2 - 30);
+
         return;
     }
-    
+
     handleParticles();
 
     requestAnimationFrame(animate);
@@ -37,6 +52,13 @@ function animate()
 animate();
 
 window.addEventListener('keydown', function(e){
+    if(e.code == 'KeyR' && is_player_dead == true) 
+    {
+        restartGame();   
+    }
+})
+
+window.addEventListener('keydown', function(e){
     if(e.code === 'Space') space_pressed = true;
 })
 
@@ -44,9 +66,27 @@ window.addEventListener('keyup', function(e){
     if(e.code === 'Space') space_pressed =false;
 })
 
-const bang = new Image();
-bang.src = "C:/Users/Xrisp/Desktop/Xrisp/WooSung/WooSungPersonal/웹게임테스트/updown_game/js/bang.png";
-//bang.src = "bang.png";
+function restartGame()
+{
+    // Main Settings.
+    is_player_dead = false;
+    space_pressed = false;
+    angle = 0;
+    hue = 0;
+    frame = 0;
+    score = 0;
+    game_speed = 2;
+
+    // Bird Settings.
+    bird = new Bird();
+
+    // Obstacles Settings.
+    obstacles_array.length = 0;
+    // Particles Settings.
+    particles_array.length = 0;
+
+    requestAnimationFrame(animate);
+}
 
 function handleCollisions(){
     for(let i = 0; i < obstacles_array.length; i++) {
@@ -60,11 +100,11 @@ function handleCollisions(){
                     
                     ctx.font = "25px Verdana";
                     ctx.fillStyle = 'black';
-                    ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 - 10);
+                    ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 + 30);
                     
                     ctx.font = "25px Verdana";
                     ctx.fillStyle = 'black';
-                    ctx.fillText('Your Score: ' + score, canvas.width/2, canvas.height/2 + 20);
+                    ctx.fillText('Your Score: ' + score, canvas.width/2, canvas.height/2 + 60);
                     
                     
                     return true;

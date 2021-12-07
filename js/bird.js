@@ -18,8 +18,11 @@ class Bird {
     }
 
     draw(){
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        ctx.drawImage(player, this.x - 15, this.y- 15, 50, 50);
+
+        //ctx.fillStyle = 'red';
+        //ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
     flap(){
@@ -56,4 +59,4 @@ class Bird {
 
 }
 
-const bird = new Bird();
+let bird = new Bird();
