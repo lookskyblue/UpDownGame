@@ -54,6 +54,22 @@ function animate()
     frame++;
 }
 animate();
+drawBackground();
+
+function drawBackground()
+{
+    document.body.style.backgroundColor = '#1b1b1b';
+
+    const white_background = document.getElementById('white_background');
+    const wb_ctx = white_background.getContext('2d');
+    white_background.width = 800;
+    white_background.height = 400;
+
+    wb_ctx.clearRect(0, 0, white_background.width, white_background.height);
+    
+    wb_ctx.fillStyle = 'white';
+    wb_ctx.fillRect(0, 0, white_background.width, white_background.height);
+}
 
 window.addEventListener('keydown', function(e){
     if(e.code == 'KeyR' && is_player_dead == true) 
@@ -73,7 +89,7 @@ window.addEventListener('keyup', function(e){
 function drawBestScore()
 {
     ctx2.font = "25px Verdana";
-    ctx2.fillStyle = 'black';
+    ctx2.fillStyle = 'white';
     ctx2.textAlign = 'center';
     ctx2.fillText('Best Score: ' + loadScore(), canvas2.width/2, canvas2.height-10);
 }

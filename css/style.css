@@ -1,3 +1,13 @@
+#white_background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 400px;
+    border: 2px solid black;
+}
+
 #canvas1 {
     position: absolute;
     top: 50%;
@@ -17,3 +27,4 @@
     height: 50px;
     /* border: 2px solid black; */
 }
+

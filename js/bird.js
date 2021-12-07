@@ -19,9 +19,9 @@ class Bird {
 
     draw(){
 
-        ctx.drawImage(player, this.x - 15, this.y- 15, 50, 50);
+        ctx.drawImage(player, this.x - 15, this.y- 15, 35, 35);
 
-        //ctx.fillStyle = 'red';
+        ctx.fillStyle = 'red';
         //ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
