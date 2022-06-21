@@ -1,5 +1,5 @@
 
-> # Updown Game
+# Updown Game
 
 * 조작법: 스페이스바
 
